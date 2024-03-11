@@ -4,13 +4,35 @@ import argparse
 import inquirer
 import tqdm
 
-def get_latest_release(repo_url: str) -> dict:
-  """Fetches the latest release data from the GitHub API."""
+def get_all_releases(repo_url: str) -> list:
+  """Fetches all release data from the GitHub API."""
   owner, repo = repo_url.split("/")[-2:]
-  api_url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
+  api_url = f"https://api.github.com/repos/{owner}/{repo}/releases"
   response = requests.get(api_url)
   response.raise_for_status()
   return response.json()
+
+def select_release(releases):
+  """Provides a selection interface for the user to choose a release."""
+  questions = [
+    inquirer.List('release',
+              message="Select a release version",
+              choices=[release['tag_name'] for release in releases],
+              ),
+  ]
+  answers = inquirer.prompt(questions)
+
+  selected_release = None
+  for i, release in enumerate(releases):
+    if release['tag_name'] == answers['release']:
+      selected_release = i
+      break
+
+  if selected_release is not None:
+    return releases[selected_release]
+  else:
+    print("Error: Selected release not found.")
+    return None
 
 def get_download_options(release_data):
   """Extracts download options from the release information."""
@@ -73,12 +95,14 @@ def gh_release_dl():
   download_folder = os.getcwd()  # Download to the current working directory
 
   try:
-    release_data = get_latest_release(args.repo_url)
-    download_options = get_download_options(release_data)
-    download_url = select_download(download_options)
+    releases = get_all_releases(args.repo_url)
+    selected_release = select_release(releases)
+    if selected_release:
+      download_options = get_download_options(selected_release)
+      download_url = select_download(download_options)
 
-    if download_url:
-      download_file(download_url, download_folder)
+      if download_url:
+        download_file(download_url, download_folder)
 
   except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
