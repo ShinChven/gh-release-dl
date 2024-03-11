@@ -1,6 +1,6 @@
 # GitHub Release Downloader
 
-![Scrrenshot](/assets/screenshot.jpg)
+<img src="/assets/screenshot.jpg" style="border-radius: 10px; width: 100%;">
 
 GitHub Release Downloader is a Python-based command-line tool that allows you to download specific releases and files from a GitHub repository.
 
