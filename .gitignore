@@ -228,3 +228,5 @@ Backup of *.doc*
 # Visio autosave temporary files
 *.~vsd*
 
+__pycache__/
+
