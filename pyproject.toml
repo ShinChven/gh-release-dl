@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gh_release_dl"
-version = "0.0.1"
+version = "0.2.0"
 description = "A CLI tool to download installers from GitHub releases"
 authors = [
     {name = "ShinChven", email = "shinchven@gmail.com"},

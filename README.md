@@ -22,10 +22,10 @@ pip install --upgrade git+https://github.com/ShinChven/gh-release-dl.git
 
 ## Usage
 
-After installation, you can use the `gh-release-dl` command to download releases. You will need to provide the URL of the GitHub repository as an argument:
+After installation, you can use the `gh-release-dl` command to download releases. You will need to provide the GitHub repository URL or the repository name in `owner/repo` format as an argument:
 
 ```bash
-gh-release-dl <GitHub repository URL>
+gh-release-dl <GitHub repository URL or owner/repo>
 ```
 
 The program will then fetch all releases from the provided GitHub repository. You will be prompted to select a release version, and then select a file from that release to download.
